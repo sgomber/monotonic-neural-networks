@@ -1,0 +1,7 @@
+*.csv
+*.h5
+*.pyc
+*.vscode
+*.DS_Store
+.idea/
+src/.idea/
