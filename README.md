@@ -24,25 +24,25 @@ If DNNs are used to solve the tasks mentioned above, then it is critical for exp
 
 # Methodology
 
-We implement the Point-wise monotonic loss approach by Gupta et. al. [1]. Please refer to [monotonic-training.py](src/monotonic-training.py) for the implementation. The method ```monotonicity_enforcing_loss``` has the main logic to compute the monotonicity based loss. This can either be imported and used while
-creating models, or can be on pre-compiled models using the steps mentioned below.
+To achieve monotonicity while trainings DNNs, we implement the Point-wise monotonic loss approach by Gupta et. al. [1]. Please refer to [monotonic-training.py](src/monotonic-training.py) for the implementation. The method ```monotonicity_enforcing_loss``` has the main logic to compute the monotonicity based loss. This can either be imported and used while
+creating your custom models, or can be directly used with pre-compiled models using the steps mentioned below.
 
 # Installation
 
-1. Basic Installations: Install `python` >= 3.8.3, Install `pip` >= 20.1.1
-2. Setting up a virtual environment:
+1. Install `python` >= 3.8.3, Install `pip` >= 20.1.1
+2. Set up the virtual environment
     ```
     pip3 install virtualenv
     python3 -m venv monotonic-nn
     source monotonic-nn/bin/activate
     ```
-3. Install needed packages:
+3. Install needed packages
     ```
     pip install pandas keras tensorflow 
     ```
 # Usage
 
-1. Create a configuration file (like one here: [configurations/boston_house_pricing.json](configurations/boston_house_pricing.json).
+1. Create a configuration file (like the one present here: [configurations/boston_house_pricing.json](configurations/boston_house_pricing.json)).
 
     ```json
     {
@@ -66,16 +66,14 @@ creating models, or can be on pre-compiled models using the steps mentioned belo
 
     1. train_data_file_path: Path to the file containing training data.
     2. test_data_file_path: Path to the file containing testing data.
-    3. pred_value_col_name: Name of the column that is being predicted (will be used to get the expected output labels).
-    4. model_file_path: Your model compiled and saved as ".h5" file. It should have the loss to be used for accuracy and the optimizer to be used before compilation as the monotonic training uses those.
+    3. pred_value_col_name: Name of the column that is being predicted (this will be used to get the expected output labels).
+    4. model_file_path: Your model compiled and saved as ".h5" file. It should have the loss to be used for accuracy and the optimizer to be used before compilation as the monotonic training uses these.
     5. monotonicity_parameters: Parameters that determine the monotonicity related information.
-
         -  monotonic_column_names: The columns on which we want the monotonicity.
-        - monotonicity_directions: ith number depicts whether we want the function to be monotonically increasing or decreasing with the ith feature. 1 represents increasing while 0 represents decreasing.
+        - monotonicity_directions: i<sup>th</sup> value depicts whether we want the function to be monotonically increasing or decreasing with the i<sup>th</sup> feature: 1 represents increasing while 0 represents decreasing.
         - monotonicity_weight: The weight (or scale) by which the monotonicity loss should be multiplied. This depends on the original empirical loss used by the model and also on how strongly you want the monotonicity to be enforced.
     
     6. training_params: Parameters determining training phase related configurations.
-
         -  epochs: Number of epochs for which to do the monotonic training.
         - batch_size: Batch size to use while training.
 
@@ -86,7 +84,7 @@ creating models, or can be on pre-compiled models using the steps mentioned belo
     python src/monotonic-training.py --config_file configurations/boston_house_pricing.json
     ```
 
-    Executing this will start the training as can be seen in the screenshot:
+    Executing this will start the training as follows:
     ![training_pic](screenshots/training.png)
 
     As can be seen, while training, we monitor both losses, the original as well
