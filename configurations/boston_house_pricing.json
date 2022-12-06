@@ -1,0 +1,15 @@
+{
+    "train_data_file_path" : "./data/boston_house_pricing/training_data.csv",
+    "test_data_file_path" : "./data/boston_house_pricing/testing_data.csv",
+    "pred_value_col_name" : "HousePrice",
+    "model_file_path": "./data/boston_house_pricing/model.h5",
+    "monotonicity_parameters": {
+        "monotonic_column_names" : ["rm", "crim"],
+        "monotonicity_directions" : [1, 0],
+        "monotonicity_weight" : 1000
+    },
+    "training_params": {
+        "epochs" : 50,
+        "batch_size" : 32
+    }
+}
