@@ -24,7 +24,13 @@ If DNNs are used to solve the tasks mentioned above, then it is critical for exp
 
 # Methodology
 
-To achieve monotonicity while trainings DNNs, we implement the Point-wise monotonic loss approach by Gupta et. al. [1]. Please refer to [monotonic-training.py](src/monotonic-training.py) for the implementation. The method ```monotonicity_enforcing_loss``` has the main logic to compute the monotonicity based loss. This can either be imported and used while
+To achieve monotonicity while trainings DNNs, we implement the Point-wise monotonic loss approach by Gupta et. al. [1]. with two slight modifications:
+
+1. We take care of both increasing and decreasing monotonicity and appropriately penalize the negative and positive gradients respectively.
+
+2. We have a multiplicative factor "monotonicity_weight" (which can be given as a parameter in the configuration file under "monotonicity_parameters"). This factor is used to scale the monotonicity loss with respect to the original empirical loss. This can be determined based  on the original empirical loss used by the model and also on how strongly you want the monotonicity to be enforced. 
+
+Please refer to [monotonic-training.py](src/monotonic-training.py) for the implementation. The method ```monotonicity_enforcing_loss``` has the main logic to compute the monotonicity based loss. This can either be imported and used while
 creating your custom models, or can be directly used with pre-compiled models using the steps mentioned below.
 
 # Installation
