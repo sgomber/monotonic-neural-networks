@@ -97,6 +97,18 @@ creating your custom models, or can be directly used with pre-compiled models us
     as the monotonicity enforcing one. The monotonic training process efficiently optimizes the problem by reducing both losses at the same time, thus giving us 
     monotonic functions with good accuracy!
 
+    Once the training is done, the trained model will be saved (with appropriate timestamp in the model file name) in the same folder as the loaded model (for e.g. ```model_mon_20221207-02:08:20.h5``` in
+    the example below)
+
+    ```bash
+    (monotonic-nn) sgomber@Shauryas-MacBook-Pro monotonic-neural-networks % ll data/boston_house_pricing 
+    total 192
+    -rw-r--r--  1 sgomber  staff  18200 Dec  3 23:06 model.h5
+    -rw-r--r--  1 sgomber  staff  35368 Dec  7 02:08 model_mon_20221207-02:08:20.h5
+    -rw-r--r--  1 sgomber  staff   7415 Dec  3 00:26 testing_data.csv
+    -rw-r--r--  1 sgomber  staff  29418 Dec  3 00:26 training_data.csv
+    ```
+
 # References
 
 1. [Akhil Gupta, Naman Shukla, Lavanya Marla, Arinbjörn Kolbeinsson, and Kartik Yellepeddi.

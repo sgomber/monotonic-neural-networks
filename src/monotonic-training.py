@@ -2,8 +2,10 @@ import argparse
 import json
 import keras
 import numpy as np
+import os
 import pandas as pd
 import tensorflow as tf
+import time
 
 # Constants used to get different values from the config json object
 TRAINING_DATA_FILE_PATH_KEY = "train_data_file_path"
@@ -139,6 +141,22 @@ def joint_loss(model, train_input, original_loss_function, monotonocity_info):
     
     return loss_computer
 
+def get_file_path_to_save_trained_model(loaded_model_file_path):
+    """
+    Returns the file path where we should save the trained model.
+    """
+    # Get the directory where loaded model file path is saved
+    loaded_model_dir = os.path.dirname(loaded_model_file_path)
+
+    # Get loaded model name
+    loaded_model_name = os.path.basename(loaded_model_file_path).split(".")[0]
+
+    # Get the new model name by appending "_mon" and the time
+    timestr = time.strftime("%Y%m%d-%H:%M:%S")
+    new_model_file_name = loaded_model_name + "_mon_" + timestr + ".h5"
+
+    return os.path.join(loaded_model_dir, new_model_file_name)
+
 def perform_monotonic_training(config):
     """
     Main method that performs the training based on the specified config.
@@ -163,6 +181,9 @@ def perform_monotonic_training(config):
     # Train the data according to the specified training parameters
     training_params = config[TRAINING_PARAMS_KEY]
     model.fit(train_dataset, train_labels_indexed, epochs=training_params[EPOCHS_KEY], batch_size=training_params[BATCH_SIZE_KEY])
+
+    # Save the model for future use
+    keras.models.save_model(model,  get_file_path_to_save_trained_model(config[MODEL_FILE_PATH_KEY]))
 
 if __name__ == "__main__":
     # Create the parser
